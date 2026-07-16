@@ -314,12 +314,10 @@ export default function App() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        background: C.canvas,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "24px 12px",
+        minHeight: "100dvh",
+        background: C.bg,
+        display: "block",
+        padding: 0,
         fontFamily:
           '-apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif',
       }}
@@ -327,14 +325,13 @@ export default function App() {
       {/* phone frame */}
       <div
         style={{
-          width: 390,
-          height: 800,
+          width: "100%",
+          maxWidth: 520,
+          margin: "0 auto",
+          height: "100dvh",
           background: C.bg,
-          borderRadius: 42,
           overflow: "hidden",
           position: "relative",
-          boxShadow: "0 30px 80px rgba(0,0,0,.5)",
-          border: "1px solid #000",
         }}
       >
         <style>{`
@@ -346,22 +343,7 @@ export default function App() {
           @keyframes rc-spin { to { transform: rotate(360deg); } }
           @keyframes rc-scan { 0%{transform:scale(.05);opacity:.7} 100%{transform:scale(1);opacity:0} }
         `}</style>
-        {/* status bar */}
-        <div
-          style={{
-            height: 40,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0 24px",
-            fontSize: 13,
-            fontWeight: 600,
-            color: C.ink,
-          }}
-        >
-          <span>9:41</span>
-          <span style={{ letterSpacing: 1 }}>● ● ●</span>
-        </div>
+        {/* 実機のステータスバー領域（セーフエリア） */}
 
         {tab === "closet" && (
           <ClosetScreen
@@ -411,7 +393,7 @@ export default function App() {
             style={{
               position: "absolute",
               right: 20,
-              bottom: 92,
+              bottom: "calc(92px + env(safe-area-inset-bottom))",
               width: 52,
               height: 52,
               borderRadius: "50%",
@@ -438,7 +420,7 @@ export default function App() {
               position: "absolute",
               left: "50%",
               transform: "translateX(-50%)",
-              bottom: 92,
+              bottom: "calc(92px + env(safe-area-inset-bottom))",
               display: "inline-flex",
               alignItems: "center",
               gap: 7,
@@ -518,8 +500,8 @@ function ClosetScreen({
     <div
       style={{
         position: "absolute",
-        top: 40,
-        bottom: 76,
+        top: "env(safe-area-inset-top)",
+        bottom: "calc(76px + env(safe-area-inset-bottom))",
         left: 0,
         right: 0,
         overflowY: "auto",
@@ -908,8 +890,8 @@ function SonarScreen({ onChoose, rescuedIds = [], closet = CLOSET }) {
     <div
       style={{
         position: "absolute",
-        top: 40,
-        bottom: 76,
+        top: "env(safe-area-inset-top)",
+        bottom: "calc(76px + env(safe-area-inset-bottom))",
         left: 0,
         right: 0,
         overflow: "hidden",
@@ -1639,8 +1621,8 @@ function PartnerScreen({ item: propItem, showToast, onDepart, closet = CLOSET })
     <div
       style={{
         position: "absolute",
-        top: 40,
-        bottom: 76,
+        top: "env(safe-area-inset-top)",
+        bottom: "calc(76px + env(safe-area-inset-bottom))",
         left: 0,
         right: 0,
         overflowY: "auto",
@@ -2429,8 +2411,8 @@ function AlbumScreen({ records, closet = CLOSET, onNextDay }) {
     <div
       style={{
         position: "absolute",
-        top: 40,
-        bottom: 76,
+        top: "env(safe-area-inset-top)",
+        bottom: "calc(76px + env(safe-area-inset-bottom))",
         left: 0,
         right: 0,
         overflowY: "auto",
@@ -3318,13 +3300,14 @@ function BottomNav({ tab, setTab }) {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 76,
+          height: "calc(76px + env(safe-area-inset-bottom))",
+          boxSizing: "border-box",
           background: "rgba(255,255,255,.96)",
           borderTop: "1px solid " + C.line,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
-          paddingBottom: 6,
+          paddingBottom: "calc(6px + env(safe-area-inset-bottom))",
         }}
       >
         {items.map(({ key, label, Icon }) => {
